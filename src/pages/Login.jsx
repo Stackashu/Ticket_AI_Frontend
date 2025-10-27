@@ -45,7 +45,15 @@ const Login = () => {
   };
   return (
     <div>
-      
+      <div>
+        <div>
+          <form>
+            <input type='text' name="email" placeholder='Enter your email' />
+            <input type='text' name="passoword" placeholder='Enter your password' />
+            <button>Login in</button>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }
