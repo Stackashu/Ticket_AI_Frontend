@@ -142,10 +142,10 @@ const Signup = () => {
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    if (e.target.name == "role") {
+    if (name == "role") {
       value = value.toLowerCase();
     }
-    setForm({ ...form, [name]: e.target.value });
+    setForm({ ...form, [name]: value });
   };
 
   const handleSignup = async (e) => {
@@ -164,19 +164,26 @@ const Signup = () => {
       );
 
       const data = await res.json();
-
       if (res.ok) {
         localStorage.setItem("token", data.token);
-        localStorage.setItem("user".JSON.stringify(data.user));
+        localStorage.setItem("user", JSON.stringify(data.user));
+        console.log("res", data);
         navigate("/");
       } else {
         alert(data.message || "signup failed");
       }
     } catch (error) {
-      alert("Signup - something went wrong");
+      console.error("Error occurred ", error.message);
+      alert("Something went wrong");
     } finally {
       setLoading(false);
     }
+    setForm({
+      email: '',
+      password: '',
+      skills: [],
+      role: 'user'
+    });
   };
 
   return (
@@ -220,8 +227,8 @@ const Signup = () => {
                 <input
                   type="radio"
                   name="role"
-                  value="developer"
-                  checked={form.role === "developer"}
+                  value="moderator"
+                  checked={form.role === "moderator"}
                   onChange={handleChange}
                   className="signup-radio"
                 />

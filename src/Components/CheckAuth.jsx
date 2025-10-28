@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CheckAuth = ({ children, protectedRoute }) => {
+const CheckAuth = ({ children, protect }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (protectedRoute) {
+    if (protect) {
       if (!token) {
         navigate("/login");
       } else {
@@ -20,7 +20,7 @@ const CheckAuth = ({ children, protectedRoute }) => {
         setLoading(false);
       }
     }
-  }, [navigate, protectedRoute]);
+  }, [navigate, protect]);
 
   if (loading) {
     return <div> Loading...</div>;

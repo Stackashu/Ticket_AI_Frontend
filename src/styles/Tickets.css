@@ -1,0 +1,130 @@
+/** Tickets Page Styles */
+
+.tickets-container {
+  min-height: 100vh;
+  padding: 40px 0;
+  background: #f6f8fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form Styles */
+.ticket-form-outer {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 24px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px 0 rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: center;
+}
+
+.ticket-form-inner {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ticket-input-title,
+.ticket-input-description {
+  font-size: 1rem;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #d0d7de;
+  background: #f4f6f8;
+  margin-bottom: 5px;
+  transition: border-color 0.2s;
+}
+
+.ticket-input-title:focus,
+.ticket-input-description:focus {
+  outline: none;
+  border-color: #288be6;
+  background: #fff;
+}
+
+.ticket-submit-button {
+  background: #288be6;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: background 0.2s;
+}
+
+.ticket-submit-button:hover {
+  background: #1861a7;
+}
+
+/* Ticket List Styles */
+.tickets-list {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 700px) {
+  .tickets-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .tickets-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.ticket-item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 22px 18px 14px 18px;
+  box-shadow: 0 2px 8px rgba(60, 60, 60, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border-left: 5px solid #288be6;
+  transition: box-shadow 0.2s;
+}
+
+.ticket-item:hover {
+  box-shadow: 0 6px 24px rgba(40, 139, 230, 0.13);
+  border-left-color: #1861a7;
+}
+
+.ticket-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #132634;
+  margin: 0;
+}
+
+.ticket-description {
+  color: #374151;
+  margin: 0 0 6px 0;
+}
+
+.ticket-status {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #28a745;
+  margin: 0;
+}
+
+.ticket-date {
+  font-size: 0.95rem;
+  color: #6b7280;
+  font-weight: 400;
+  margin: 0;
+  align-self: flex-end;
+}
