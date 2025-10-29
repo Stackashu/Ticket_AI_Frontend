@@ -33,8 +33,10 @@ const Tickets = () => {
          },
          body: JSON.stringify(form)
        });
+       const data = res.json()
+       console.log("data",data)
      } catch (error) {
-      
+      console.error("error",error)
      }
   } 
 
@@ -52,7 +54,7 @@ const Tickets = () => {
     async function fetchTickets() {
       try {
         const token = await localStorage.getItem("token");
-        console.log("token", token)
+        // console.log("token", token)
         if (!token) {
           alert("You are Not Authorized");
           navigate("/login");
@@ -67,13 +69,13 @@ const Tickets = () => {
           }
         );
         const data = await res.json();
-        setTickets(data); // Save to state (missing from original)
-        console.log(data);
+        setTickets(data.tickets); // Save to state (missing from original)
+        // console.log(data);
       } catch (error) {
         console.error("no ticket found", error);
       }
     }
-    // fetchTickets();
+    fetchTickets();
   }, []);
 
   return (
@@ -96,7 +98,7 @@ const Tickets = () => {
             value={form.description}
             onChange={e => handleChange(e)}
           />
-          <button className="ticket-submit-button">submit</button>
+          <button className="ticket-submit-button" onClick={handleSubmit}>submit</button>
         </div>
       </div>
       <div className="tickets-list">
