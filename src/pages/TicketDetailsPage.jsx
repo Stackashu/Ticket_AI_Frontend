@@ -32,11 +32,14 @@ const TicketDetailsPage = () => {
         }
       );
       const data = await res.json();
+      console.log(data.ticket)
       setTicketDetail(data.ticket || null);
     } catch (error) {
       console.error("no ticket found", error);
     }
   };
+
+ 
 
   if (!ticketDetail) {
     return (
@@ -78,16 +81,16 @@ const TicketDetailsPage = () => {
         </div>
         <div className="ticket-details-section">
           <label className="ticket-details-label">Created By:</label>
-          <span className="ticket-details-value">{ticketDetail.createdBy}</span>
+          <span className="ticket-details-value">{ticketDetail.createdBy?.email}</span>
         </div>
         <div className="ticket-details-section">
           <label className="ticket-details-label">Assigned To:</label>
           <span className="ticket-details-value">{ticketDetail.assignedTo?.email || "Unassigned"}</span>
         </div>
-        <div className="ticket-details-section">
+        {/* <div className="ticket-details-section">
           <label className="ticket-details-label">Email:</label>
           <span className="ticket-details-value">{ticketDetail.email || "N/A"}</span>
-        </div>
+        </div> */}
         <div className="ticket-details-section">
           <label className="ticket-details-label">Priority:</label>
           <span className={`ticket-details-priority priority-${(ticketDetail.priority || "").toLowerCase()}`}>

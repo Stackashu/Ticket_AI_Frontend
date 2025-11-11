@@ -179,68 +179,104 @@ const Signup = () => {
       setLoading(false);
     }
     setForm({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       skills: [],
-      role: 'user'
+      role: "user",
     });
+  };
+
+  // Helper to remove a skill from selection
+  const handleRemoveSkill = (skill) => {
+    setForm((prev) => ({
+      ...prev,
+      skills: prev.skills.filter((sk) => sk !== skill),
+    }));
   };
 
   return (
     <div className="signup-outer">
       <div className="signup-inner">
         <div className="signup-content">
-          <form className="signup-form" onSubmit={handleSignup}>
-            <input
-              type="text"
-              placeholder="Enter your email id"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className="signup-input"
-            />
-
-            <input
-              type="password"
-              placeholder="Enter your password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              className="signup-input"
-            />
-
-            <div className="signup-role-section">
-              <h1 className="signup-role-title">Register as</h1>
-              <label className="signup-role-label">
-                <input
-                  type="radio"
-                  name="role"
-                  value="user"
-                  checked={form.role === "user"}
-                  onChange={handleChange}
-                  className="signup-radio"
-                />
-                User
+          <h2 className="signup-title" style={{ textAlign: "center", marginBottom: 18 }}>
+            Signup
+          </h2>
+          <form className="signup-form" onSubmit={handleSignup} autoComplete="off">
+            <div className="signup-form-group">
+              <label htmlFor="email" className="signup-label">
+                Email
               </label>
-
-              <label className="signup-role-label">
-                <input
-                  type="radio"
-                  name="role"
-                  value="moderator"
-                  checked={form.role === "moderator"}
-                  onChange={handleChange}
-                  className="signup-radio"
-                />
-                Developer
-              </label>
+              <input
+                id="email"
+                type="text"
+                placeholder="Enter your email id"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className="signup-input"
+                autoComplete="email"
+                required
+              />
             </div>
 
-            <div className="signup-skills-section">
+            <div className="signup-form-group">
+              <label htmlFor="password" className="signup-label">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                className="signup-input"
+                autoComplete="new-password"
+                required
+              />
+            </div>
+
+            <div className="signup-role-section">
+              <div className="signup-form-group">
+                <span className="signup-role-title" style={{ fontWeight: 500 }}>
+                  Register as
+                </span>
+              </div>
+              <div style={{ display: "flex", gap: "1.5rem" }}>
+                <label className="signup-role-label" style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="user"
+                    checked={form.role === "user"}
+                    onChange={handleChange}
+                    className="signup-radio"
+                  />
+                  User
+                </label>
+                <label className="signup-role-label" style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="moderator"
+                    checked={form.role === "moderator"}
+                    onChange={handleChange}
+                    className="signup-radio"
+                  />
+                  Developer
+                </label>
+              </div>
+            </div>
+
+            <div className="signup-skills-section" style={{ marginTop: 18 }}>
+              <label className="signup-label" htmlFor="skills">
+                Select Skills (optional)
+              </label>
               <div className="signup-select-wrapper">
                 <select
+                  id="skills"
                   name="skills"
-                  value={form.skills || []}
+                  value={form.skills}
                   onChange={(e) => {
                     const selected = Array.from(e.target.selectedOptions).map(
                       (option) => option.value
@@ -251,11 +287,7 @@ const Signup = () => {
                   className="signup-skills-select"
                 >
                   {TECHNOLOGIES.map((tech, idx) => (
-                    <option
-                      key={idx}
-                      value={tech}
-                      className="signup-skill-option"
-                    >
+                    <option key={idx} value={tech} className="signup-skill-option">
                       {tech}
                     </option>
                   ))}
@@ -263,14 +295,47 @@ const Signup = () => {
               </div>
               <div className="signup-skills-selected">
                 {Array.isArray(form.skills) && form.skills.length > 0
-                  ? form.skills.map((sk, idx) => (
-                      <div>
-                        <h1 key={idx} className="signup-skill-chip">
+                  ? (
+                    <div className="signup-skills-list">
+                      {form.skills.map((sk, idx) => (
+                        <span
+                          key={idx}
+                          className="signup-skill-chip"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            background: "#eef2fb",
+                            color: "#2952a5",
+                            borderRadius: "16px",
+                            padding: "5px 12px",
+                            margin: "6px 8px 0 0",
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}
+                        >
                           {sk}
-                        </h1>
-                        <span> X </span>
-                      </div>
-                    ))
+                          <button
+                            type="button"
+                            aria-label={`Remove ${sk}`}
+                            style={{
+                              border: "none",
+                              background: "none",
+                              marginLeft: 7,
+                              cursor: "pointer",
+                              color: "#b41d39",
+                              fontSize: 16,
+                              fontWeight: "bold",
+                              lineHeight: "1",
+                            }}
+                            onClick={() => handleRemoveSkill(sk)}
+                            tabIndex={0}
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )
                   : null}
               </div>
             </div>
@@ -279,6 +344,21 @@ const Signup = () => {
               type="submit"
               className="signup-submit-btn"
               disabled={loading}
+              style={{
+                marginTop: 24,
+                width: "100%",
+                padding: "9px 0",
+                fontWeight: 600,
+                fontSize: "1.1rem",
+                background: "#3250cd",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                boxShadow: "0 1px 6px rgba(32,52,120,0.08)",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.8 : 1,
+                transition: "all 0.17s",
+              }}
             >
               {loading ? "Signing up..." : "Sign up"}
             </button>
